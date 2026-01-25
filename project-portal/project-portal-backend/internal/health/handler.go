@@ -17,16 +17,16 @@ func NewHandler(service Service) *Handler {
 	return &Handler{service: service}
 }
 
-// RegisterRoutes registers all report routes with the Gin router
-func (h *Handler) RegisterRoutes(router *gin.RouterGroup) {
-	reports := router.Group("/health")
+// RegisterRoutes registers health routes with the Gin router
+func RegisterRoutes(r *gin.Engine, h *Handler) {
+	v1 := r.Group("/api/v1/health")
 	{
-		reports.POST("/metrics", h.CreateSystemMetric)
-		reports.GET("/metrics", h.GetSystemMetrics)
-		reports.GET("/status", h.GetSystemStatus)
-		reports.GET("/status/detailed", h.GetDetailedStatus)
-		reports.GET("/services", h.GetServicesHealth)
-		reports.POST("/checks", h.CreateServiceHealthCheck)
+		v1.POST("/metrics", h.CreateSystemMetric)
+		v1.GET("/metrics", h.GetSystemMetrics)
+		v1.GET("/status", h.GetSystemStatus)
+		v1.GET("/status/detailed", h.GetDetailedStatus)
+		v1.GET("/services", h.GetServicesHealth)
+		v1.POST("/checks", h.CreateServiceHealthCheck)
 	}
 }
 

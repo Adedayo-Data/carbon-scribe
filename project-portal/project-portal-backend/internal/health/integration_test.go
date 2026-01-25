@@ -19,7 +19,6 @@ import (
 func setupTestRouter(t *testing.T) (*gin.Engine, *gorm.DB) {
 	gin.SetMode(gin.TestMode)
 	router := gin.Default()
-	v1 := router.Group("/api/v1")
 
 	dbURL := os.Getenv("DATABASE_URL")
 	if dbURL == "" {
@@ -34,7 +33,7 @@ func setupTestRouter(t *testing.T) (*gin.Engine, *gorm.DB) {
 	repo := health.NewRepository(db)
 	service := health.NewService(repo)
 	handler := health.NewHandler(service)
-	handler.RegisterRoutes(v1)
+	health.RegisterRoutes(router, handler)
 
 	// Clean up database tables for isolation
 	db.Exec("TRUNCATE TABLE system_metrics, service_health_checks, health_check_results RESTART IDENTITY CASCADE")
