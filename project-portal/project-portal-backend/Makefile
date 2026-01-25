@@ -15,7 +15,7 @@ GOFMT=gofmt
 GOLINT=golangci-lint
 
 # Binary names
-BINARY_NAME=portal-api
+BINARY_NAME=api
 LAMBDA_BINARY=bootstrap
 
 # Build directories
@@ -23,7 +23,7 @@ BUILD_DIR=./build
 LAMBDA_DIR=./build/lambda
 
 # Main package
-MAIN_PACKAGE=./cmd/portal-api
+MAIN_PACKAGE=./cmd/api
 
 # Docker
 DOCKER_IMAGE=carbonscribe-portal-api
@@ -63,7 +63,7 @@ lambda-zip: lambda-build
 	cd $(LAMBDA_DIR) && zip function.zip $(LAMBDA_BINARY)
 
 # Run
-run: db-up
+run: 
 	go run cmd/api/main.go
 
 dev:
